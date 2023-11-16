@@ -20,7 +20,6 @@ import java.io.InputStream;
 import java.util.Base64;
 
 //https://firebase.google.com/docs/storage/admin/start
-@Configuration
 @Service
 public class FirebaseStorageService {
 	
