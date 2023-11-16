@@ -10,21 +10,32 @@ import com.google.firebase.cloud.StorageClient;
 
 import jakarta.annotation.PostConstruct;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Service;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Base64;
 
 //https://firebase.google.com/docs/storage/admin/start
+@Configuration
 @Service
 public class FirebaseStorageService {
+	
+	private final String firebaseCredentials;
+
+    public FirebaseStorageService(@Value("${CFC}") String firebaseCredentials) {
+        this.firebaseCredentials = firebaseCredentials;
+    }
 
     @PostConstruct
     private void init() throws IOException {
         if(FirebaseApp.getApps().isEmpty()) {
-            InputStream in =
-                    FirebaseStorageService.class.getResourceAsStream("/serviceAccountKey.json");
+        	
+        	InputStream in = new ByteArrayInputStream(firebaseCredentials.getBytes());
+            //InputStream in = FirebaseStorageService.class.getResourceAsStream("/serviceAccountKey.json");
 
             System.out.println(in);
 
